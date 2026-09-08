@@ -29,30 +29,36 @@ class MainActivity : AppCompatActivity() {
         expliciteIntent()
     }
 
-    fun impliciteintent(){
+    fun impliciteintent() {
         findViewById<Button>(R.id.btn_browse).setOnClickListener {
-        Intent(Intent.ACTION_VIEW, Uri.parse(findViewById<EditText>(R.id.WebUrl).text.toString())).also { startActivity(it) }
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(findViewById<EditText>(R.id.WebUrl).text.toString())
+            ).also { startActivity(it) }
 
         }
 
-        findViewById<Button>(R.id.btn_call).setOnClickListener{
+        findViewById<Button>(R.id.btn_call).setOnClickListener {
             val number = findViewById<EditText>(R.id.Phoneno).text.toString()
             val intent = Intent(Intent.ACTION_DIAL)
             intent.setData("tel:$number".toUri())
             startActivity(intent)
         }
 
-        findViewById<Button>(R.id.btn_call_log).setOnClickListener{
-            Intent(Intent.ACTION_VIEW).setType(CallLog.Calls.TYPE).apply { startActivity(this) }
+        findViewById<Button>(R.id.btn_call_log).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("content://call_log/calls")
+
+            startActivity(intent)
         }
-        findViewById<Button>(R.id.btn_gallery).setOnClickListener{
-            Intent(Intent.ACTION_VIEW).setType("image/star").apply { startActivity(this) }
+        findViewById<Button>(R.id.btn_gallery).setOnClickListener {
+            Intent(Intent.ACTION_VIEW).setType("image/*").apply { startActivity(this) }
         }
-        findViewById<Button>(R.id.btn_camera).setOnClickListener{
+        findViewById<Button>(R.id.btn_camera).setOnClickListener {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { startActivity(it) }
         }
-        findViewById<Button>(R.id.btn_alarm).setOnClickListener{
-            Intent(AlarmClock.ACTION_SET_ALARM).also{ startActivity(it) }
+        findViewById<Button>(R.id.btn_alarm).setOnClickListener {
+            Intent(AlarmClock.ACTION_SHOW_ALARMS).also { startActivity(it) }
         }
     }
 
